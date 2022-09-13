@@ -13,7 +13,7 @@ import (
 
 var nmapFileName = "nmap.txt"
 var largeNmapFileName = "large-nmap.txt"
-var udpNmapFileName = "udp-nbmap.txt"
+var udpNmapFileName = "udp-nmap.txt"
 
 var interfacePtr *string
 var udpPtr *bool
