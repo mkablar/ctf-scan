@@ -37,6 +37,11 @@ git clone https://github.com/mkablar/ctf-scan.git
 cd ctf-scan
 ```
 3. Change the desired file names, located at the top of the file, with the editor of your choice
+```go
+var nmapFileName = "nmap.txt"
+var largeNmapFileName = "large-nmap.txt"
+var udpNmapFileName = "udp-nbmap.txt"
+```
 4. Build and place the file in /usr/bin
 ```sh
 sudo go build -o /usr/bin ctfscan.go

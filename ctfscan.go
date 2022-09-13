@@ -11,6 +11,10 @@ import (
 	"strings"
 )
 
+var nmapFileName = "nmap.txt"
+var largeNmapFileName = "large-nmap.txt"
+var udpNmapFileName = "udp-nbmap.txt"
+
 var interfacePtr *string
 var udpPtr *bool
 var ip string
@@ -34,13 +38,13 @@ func main() {
 	openPorts := GetMasscanOpenPorts()
 	if openPorts != "" {
 		PrintMasscanResult(openPorts)
-		RunNmapOnPorts(openPorts, "nmap.txt")
+		RunNmapOnPorts(openPorts, nmapFileName)
 	}
 
-	RunNmapOnAllPorts("large-nmap.txt")
+	RunNmapOnAllPorts()
 
 	if *udpPtr {
-		RunUpdNmapScan("udp-nmap.txt")
+		RunUpdNmapScan()
 	}
 }
 
@@ -142,7 +146,7 @@ func GetMasscanOpenPorts() string {
 	fmt.Println("Starting quick masscan for open ports!")
 	PrintDashes()
 
-	msCmd := exec.Command("masscan", ip, "-p0-65535", "--rate", "10000", "-e", *interfacePtr)
+	msCmd := exec.Command("masscan", ip, "-p0-65535", "--rate", "1000", "-e", *interfacePtr)
 	msCmd.Stdout = mw
 	msCmd.Stderr = mw
 	msErr := msCmd.Run()
@@ -170,15 +174,15 @@ func RunNmapOnPorts(ports string, fileName string) {
 	PrintNmapFinished()
 }
 
-func RunNmapOnAllPorts(fileName string) {
-	RunNmapOnPorts("0-65535", fileName)
+func RunNmapOnAllPorts() {
+	RunNmapOnPorts("0-65535", largeNmapFileName)
 }
 
-func RunUpdNmapScan(fileName string) {
+func RunUpdNmapScan() {
 	fmt.Println("Starting udp nmap scan on top 1000 ports!")
 	PrintDashes()
 
-	nmapCmd := exec.Command("nmap", "-sU", ip, "-A", "-oN", fileName)
+	nmapCmd := exec.Command("nmap", "-sU", ip, "-A", "-oN", udpNmapFileName)
 	nmapCmd.Stdout = mw
 	nmapCmd.Stderr = mw
 	nmapErr := nmapCmd.Run()
