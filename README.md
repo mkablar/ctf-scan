@@ -17,7 +17,14 @@ Instructions on how to setup the project.
 
 ### Prerequisites
 
-To build and run this program, you need to have golang installed on the machine.
+To build and run this program, you need to have golang installed on the machine. You can check if it is present with
+```sh
+go version
+```
+with the response showing you the version similar to
+```sh
+go version go1.18.3 linux/amd64
+```
 
 ### Installation
 
@@ -25,7 +32,10 @@ To build and run this program, you need to have golang installed on the machine.
 ```sh
 git clone https://github.com/mkablar/ctf-scan.git
 ```
-2. Cd into the ctf-scan folder
+2. Cd into the ctf-scan directory
+```sh
+cd ctf-scan
+```
 3. Change the desired file names, located at the top of the file, with the editor of your choice
 4. Build and place the file in /usr/bin
 ```sh
@@ -38,3 +48,9 @@ sudo go build -o /usr/bin ctfscan.go
 2. Ip address is required
 3. -i flag is to specify a network interface, default eth0 if not provided
 4. -u flag is to specify that you want to run a udp scan, after the tcp scan finishes
+
+### Example
+```sh
+sudo ctfscan 10.10.10.3 -u -i tun0
+```
+This will run a scan on the 10.10.10.3 ip, using the network interface tun0, and will do a udp scan as well.
