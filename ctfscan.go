@@ -18,7 +18,8 @@ var stdOutBuf bytes.Buffer
 var mw = io.MultiWriter(os.Stdout, &stdOutBuf)
 
 func main() {
-
+	CheckRootUser()
+	
 	SetFlagUsage()
 	ProcessFlags()
 
@@ -58,6 +59,7 @@ func SetFlagUsage() {
 		fmt.Printf("Usage of %s:\n", "ctfscan")
 		PrintDashes()
 		fmt.Printf("Ip address is mandatory!\n")
+		fmt.Printf("Command needs to be run as root!\n")
 		fmt.Printf("Example usage:\tctfscan 192.160.0.1 -i tun0 -u\n")
 		PrintDashes()
 		order := []string{"i", "u"}
@@ -203,4 +205,24 @@ func PrintMasscanResult(openPorts string) {
 	PrintDashes()
 	fmt.Printf("Masscan found %s open!\n", openPorts)
 	PrintDashes()
+}
+
+func CheckRootUser() {
+	cmd := exec.Command("id", "-u")
+	output, err := cmd.Output()
+
+	if err != nil {
+		panic(err)
+	}
+
+	uid, err := strconv.Atoi(string(output[:len(output)-1]))
+	if err != nil {
+		panic(err)
+	}
+
+	// root is 0
+	if uid != 0 {
+		fmt.Printf("Command needs to be run as root!\n")
+		os.Exit(3)
+	}
 }
