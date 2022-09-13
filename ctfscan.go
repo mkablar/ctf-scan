@@ -56,9 +56,10 @@ func SetFlagUsage() {
 	flag.Usage = func() {
 		flagSet := flag.CommandLine
 		fmt.Printf("Usage of %s:\n", "ctfscan")
-		fmt.Printf("--------------------------\n")
+		PrintDashes()
 		fmt.Printf("Ip address is mandatory!\n")
-		fmt.Printf("Example usage:\n\tctfscan 192.160.0.1 -i tun0 -u\n")
+		fmt.Printf("Example usage:\tctfscan 192.160.0.1 -i tun0 -u\n")
+		PrintDashes()
 		order := []string{"i", "u"}
 		for _, name := range order {
 			flag := flagSet.Lookup(name)
@@ -139,7 +140,7 @@ func GetMasscanOpenPorts() string {
 	fmt.Println("Starting quick masscan for open ports!")
 	PrintDashes()
 
-	msCmd := exec.Command("masscan", ip, "-p0-65535", "--rate", "1000", "-e", *interfacePtr)
+	msCmd := exec.Command("masscan", ip, "-p0-65535", "--rate", "10000", "-e", *interfacePtr)
 	msCmd.Stdout = mw
 	msCmd.Stderr = mw
 	msErr := msCmd.Run()
