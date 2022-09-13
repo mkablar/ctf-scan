@@ -55,10 +55,10 @@ func IsValueFlag(flag byte) bool {
 func SetFlagUsage() {
 	flag.Usage = func() {
 		flagSet := flag.CommandLine
-		fmt.Printf("Usage of %s:\n", "htbscan")
+		fmt.Printf("Usage of %s:\n", "ctfscan")
 		fmt.Printf("--------------------------\n")
 		fmt.Printf("Ip address is mandatory!\n")
-		fmt.Printf("Example usage:\n\t htbscan 192.160.0.1 -i tun0 -u\n")
+		fmt.Printf("Example usage:\n\tctfscan 192.160.0.1 -i tun0 -u\n")
 		order := []string{"i", "u"}
 		for _, name := range order {
 			flag := flagSet.Lookup(name)
